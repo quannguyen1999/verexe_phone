@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -14,7 +15,10 @@ import com.google.android.material.textfield.TextInputLayout;
 public class login extends AppCompatActivity {
     String verificationCodeBySystem;
     private static final int LOGIN = 999;
+    private static final int SIGNUP = 888;
     private Button btnDangNhap;
+    private Button btnSignUpLG;
+    private ImageButton imgBack;
     private TextInputLayout txtPhone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,8 @@ public class login extends AppCompatActivity {
     private void metaData(){
         btnDangNhap = findViewById(R.id.btnDangNhap);
         txtPhone = findViewById(R.id.phone);
+        btnSignUpLG = findViewById(R.id.btnSignUpLG);
+        imgBack = findViewById(R.id.imgBack);
     }
 
     private void handleEvent(){
@@ -42,6 +48,21 @@ public class login extends AppCompatActivity {
                 Intent intent = new Intent(login.this,VerifyOtp.class);
                 startActivityForResult(intent,LOGIN);
                 return;
+            }
+        });
+        btnSignUpLG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(login.this,SignUp.class);
+                startActivityForResult(intent,SIGNUP);
+                return;
+            }
+        });
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               finish();
             }
         });
     }

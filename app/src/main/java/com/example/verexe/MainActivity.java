@@ -1,6 +1,7 @@
 package com.example.verexe;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,35 +9,123 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final int FROM = 111;
+    private static final int TO = 222;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    Button btnTimVexe;
+    EditText from;
+    EditText to;
 
+    private TextInputLayout textInputLayout;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        getActionBar().hide();
-
-        drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
-
+        metaData();
+        textInputLayout.getEditText().setText(LocalDate.now().toString());
         setSupportActionBar(toolbar);
-
         navigationView.bringToFront();
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
-
         navigationView.setNavigationItemSelectedListener(this);
+        handleEvent();
+    }
+
+    private void handleEvent(){
+        btnTimVexe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OkHttpClient client = new OkHttpClient();
+                String url ="http://xedike.ddnsking.com/api/v1/provinces";
+                Request request = new Request.Builder().url(url).build();
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if(response.isSuccessful()){
+                            String myResponse = response.body().string();
+                            try {
+                                JSONObject json= new JSONObject(myResponse);  //your response
+                                JSONArray result = json.getJSONArray("data");
+                                for(int i=0;i<result.length();i++){
+                                    JSONObject jsonObject = result.getJSONObject(i);
+                                    System.out.println("id:"+jsonObject.getString("name"));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            System.out.println(myResponse);
+                        }
+                    }
+                });
+            }
+        });
+        from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,startingPlace.class);
+                startActivityForResult(intent,FROM);
+                return;
+            }
+        });
+
+        to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,startingPlace.class);
+                startActivityForResult(intent,TO);
+                return;
+            }
+        });
+    }
+
+    private void metaData(){
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
+        textInputLayout = findViewById(R.id.datecome);
+        btnTimVexe = findViewById(R.id.btnTimVexe);
+        from = findViewById(R.id.from);
+        to = findViewById(R.id.to);
     }
 
     @Override
@@ -47,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

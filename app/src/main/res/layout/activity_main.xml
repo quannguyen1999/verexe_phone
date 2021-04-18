@@ -7,8 +7,7 @@
     tools:context=".MainActivity"
     android:fitsSystemWindows="true"
     tools:openDrawer="true"
-    android:id="@+id/drawerLayout"
-    >
+    android:id="@+id/drawerLayout">
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -42,9 +41,29 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/menu"
-                tools:ignore="MissingConstraints"></ImageView>
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="verexe.com"
+                android:textAlignment="viewEnd"
+                android:textSize="15sp"
+                android:fontFamily="@font/bunge"
+                android:paddingTop="30dp"
+                android:paddingRight="20dp"
+                ></TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 
+    <fragment
+        android:id="@+id/fragmentHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_home"
+        android:name="com.example.verexe.FragmentHome"
+        >
 
+    </fragment>
 </androidx.drawerlayout.widget.DrawerLayout>

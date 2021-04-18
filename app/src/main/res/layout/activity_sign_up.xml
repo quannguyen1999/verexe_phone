@@ -11,7 +11,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="91dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#fece2f"
+        >
         <ImageButton
             android:id="@+id/imgBackDK"
             android:layout_width="30dp"
@@ -32,11 +34,26 @@
             android:src="@drawable/schoolbus"
             android:transitionName="imageVBA"></ImageView>
     </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        >
+        <ImageView
+            android:layout_width="411dp"
+            android:layout_height="99dp"
+            android:src="@drawable/ic_wave"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <TextView
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Xin chào"
@@ -58,7 +75,7 @@
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
         <com.google.android.material.textfield.TextInputLayout

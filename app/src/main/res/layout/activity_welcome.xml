@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Welcome"
+    android:orientation="vertical"
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+        <ImageView
+            android:id="@+id/outside_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_alignLeft="@id/inside_imageview"
+            android:layout_alignTop="@id/inside_imageview"
+            android:layout_alignRight="@id/inside_imageview"
+            android:layout_alignBottom="@id/inside_imageview"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="-57dp"
+            android:src="@drawable/cloud" />
+
+        <ImageView
+            android:id="@+id/inside_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="237dp"
+            android:layout_marginTop="30dip"
+            android:layout_marginBottom="60dip"
+            android:paddingTop="50dp"
+            android:src="@drawable/schoolbus" />
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="QUANLY verexe"
+        android:fontFamily="@font/bunge"
+        android:textSize="50sp"
+        android:textAlignment="center"
+        android:layout_marginTop="70dp"
+        android:textColor="@color/black"></TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Hệ thống vé rẻ xe"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:fontFamily="@font/antic"
+        android:textColor="@color/black"/>
+
+</LinearLayout>

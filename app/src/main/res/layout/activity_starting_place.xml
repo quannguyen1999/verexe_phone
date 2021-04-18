@@ -64,6 +64,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
+        android:imeOptions="actionSearch"
+        android:id="@+id/txtFind"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Tên tỉnh/thành phố,quận/huyện"

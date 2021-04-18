@@ -1,5 +1,7 @@
 package com.example.verexe.service;
 
+import com.example.verexe.HttpRequestCommon;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +20,7 @@ public class ProvinceService {
     public static List<String> getProvince(){
         List<String> listArray = new ArrayList<>();
         OkHttpClient client = new OkHttpClient();
-        String url ="http://xedike.ddnsking.com/api/v1/provinces";
+        String url = HttpRequestCommon.url_province;
         Request request = new Request.Builder().url(url).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -39,8 +41,6 @@ public class ProvinceService {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    System.out.println(myResponse);
                 }
             }
         });

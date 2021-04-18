@@ -1,6 +1,7 @@
 package com.example.verexe;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,9 +17,12 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -26,8 +31,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.Call;
@@ -47,6 +55,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Button btnTimVexe;
     EditText from;
     EditText to;
+    Button dateformat;
+    int year;
+    int month;
+    int day;
+
+
 
     private TextInputLayout textInputLayout;
 
@@ -56,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         metaData();
-        textInputLayout.getEditText().setText(LocalDate.now().toString());
+//        textInputLayout.getEditText().setText(LocalDate.now().toString());
         setSupportActionBar(toolbar);
         navigationView.bringToFront();
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -92,8 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-                            System.out.println(myResponse);
                         }
                     }
                 });
@@ -116,6 +128,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return;
             }
         });
+
+        final long today = MaterialDatePicker.todayInUtcMilliseconds();
+        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
+        builder.setTitleText("Select a Date");
+        builder.setSelection(today);
+        final MaterialDatePicker materialDatePicker = builder.build();
+
+        dateformat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER");
+            }
+        });
+
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                dateformat.setText(materialDatePicker.getHeaderText());
+            }
+        });
     }
 
     private void metaData(){
@@ -126,6 +158,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btnTimVexe = findViewById(R.id.btnTimVexe);
         from = findViewById(R.id.from);
         to = findViewById(R.id.to);
+        dateformat = findViewById(R.id.dateformatID);
+
+
     }
 
     @Override
@@ -152,4 +187,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == FROM){
+            if(resultCode == RESULT_OK){
+                Bundle bundle = data.getBundleExtra("add");
+                from.setText(bundle.getString("value"));
+            }
+        }else if(requestCode == TO){
+            if(resultCode == RESULT_OK){
+                Bundle bundle = data.getBundleExtra("add");
+                to.setText(bundle.getString("value"));
+            }
+        }
+    }
 }

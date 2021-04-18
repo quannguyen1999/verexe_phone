@@ -26,7 +26,8 @@
                     android:layout_height="100dp"
                     android:src="@drawable/schoolbus"
                     android:layout_centerVertical="true"
-                    ></ImageView>
+                    android:transitionName="imageVBA">
+                ></ImageView>
                 <TextView
                     android:id="@+id/full_name"
                     android:layout_width="wrap_content"
@@ -53,8 +54,6 @@
                     android:textSize="15sp"
 
                     />
-
-
             </RelativeLayout>
 
 
@@ -127,12 +126,30 @@
                             android:id="@+id/datecome"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:hint="Ngày đi">
-                            <com.google.android.material.textfield.TextInputEditText
+
+                            <Button
+                                android:id="@+id/dateformatID"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="20dp">
-                            </com.google.android.material.textfield.TextInputEditText>
+                                android:layout_marginTop="-20dp"
+                                android:layout_marginBottom="20dp"
+                                android:background="@color/white"
+                                android:hint="Chọn ngày đi"
+                                android:textAlignment="viewStart"
+                                android:textColor="@color/white"
+                                android:textColorHighlight="@color/white"
+                                android:textColorHint="@color/white"
+                                android:textColorLink="@color/white"
+                                app:backgroundTint="#828282"></Button>
                         </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="300dp"
+                        >
+
 
                     </RelativeLayout>
 

@@ -9,18 +9,24 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.ActionBar;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.verexe.service.TripService;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.navigation.NavigationView;
@@ -70,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         metaData();
-//        textInputLayout.getEditText().setText(LocalDate.now().toString());
         setSupportActionBar(toolbar);
         navigationView.bringToFront();
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -84,31 +89,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btnTimVexe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OkHttpClient client = new OkHttpClient();
-                String url ="http://xedike.ddnsking.com/api/v1/provinces";
-                Request request = new Request.Builder().url(url).build();
-                client.newCall(request).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
-                    }
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        if(response.isSuccessful()){
-                            String myResponse = response.body().string();
-                            try {
-                                JSONObject json= new JSONObject(myResponse);  //your response
-                                JSONArray result = json.getJSONArray("data");
-                                for(int i=0;i<result.length();i++){
-                                    JSONObject jsonObject = result.getJSONObject(i);
-                                    System.out.println("id:"+jsonObject.getString("name"));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
+//                if(from.getText().toString().isEmpty()){
+//                    showDialog("Vui lòng chọn điếm đón");
+//                    return;
+//                }
+//                if(to.getText().toString().isEmpty()){
+//                    showDialog("Vui lòng chọn điếm về");
+//                    return;
+//                }
+
+//                try {
+                    TripService.searchTrip("a","b",null);
+
             }
         });
         from.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +140,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dateformat.setText(materialDatePicker.getHeaderText());
             }
         });
+    }
+
+    private void showDialog(String error) {
+        Button btnBack;
+        TextView txtError;
+        Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.error_layout);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        btnBack = dialog.findViewById(R.id.btnbackDA);
+        txtError = dialog.findViewById(R.id.txtError);
+        txtError.setText(error);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.CENTER);
+        window.getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.setCancelable(true);
+        window.setLayout(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+        dialog.show();
     }
 
     private void metaData(){

@@ -22,11 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHodler>{
-
     List<String> stringList;
     Context context;
     private Activity activity;
-
 
     public MyAdapter(Context ct,List<String> stringList,Activity activity){
         context = ct;

@@ -53,12 +53,8 @@ public class startingPlace extends AppCompatActivity {
         imgBackXP = findViewById(R.id.imgBackXP);
         txtFind = findViewById(R.id.txtFind);
         getSupportActionBar().hide();
-        for (String s : ProvinceService.getProvince()) {
-            System.out.println(s);
-        }
         listProvince = new ArrayList<>();
         mHandler = new Handler(Looper.getMainLooper());
-//        listProvince.addAll();
         myAdapter = new MyAdapter(this, ProvinceService.getProvince(),startingPlace.this);
         rclView.setAdapter(myAdapter);
         rclView.setLayoutManager(new LinearLayoutManager(this));

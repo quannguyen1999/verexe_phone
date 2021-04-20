@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.verexe.MainActivity;
 import com.example.verexe.R;
+import com.example.verexe.startingPlace;
 
 import java.util.ArrayList;
 import java.util.List;

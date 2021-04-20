@@ -7,11 +7,11 @@ public class Location {
     private String nameProject;
     private String nameProvince;
     private String nameDistrict;
-    private LocalTime timeBegin;
+    private String timeBegin;
     private int hour;
     private int minute;
 
-    public Location(int idProject, String nameProject, String nameProvince, String nameDistrict, LocalTime timeBegin, int hour, int minute) {
+    public Location(int idProject, String nameProject, String nameProvince, String nameDistrict, String timeBegin, int hour, int minute) {
         this.idProject = idProject;
         this.nameProject = nameProject;
         this.nameProvince = nameProvince;
@@ -56,11 +56,11 @@ public class Location {
         this.nameDistrict = nameDistrict;
     }
 
-    public LocalTime getTimeBegin() {
+    public String getTimeBegin() {
         return timeBegin;
     }
 
-    public void setTimeBegin(LocalTime timeBegin) {
+    public void setTimeBegin(String timeBegin) {
         this.timeBegin = timeBegin;
     }
 
@@ -78,5 +78,18 @@ public class Location {
 
     public void setMinute(int minute) {
         this.minute = minute;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "idProject=" + idProject +
+                ", nameProject='" + nameProject + '\'' +
+                ", nameProvince='" + nameProvince + '\'' +
+                ", nameDistrict='" + nameDistrict + '\'' +
+                ", timeBegin='" + timeBegin + '\'' +
+                ", hour=" + hour +
+                ", minute=" + minute +
+                '}';
     }
 }

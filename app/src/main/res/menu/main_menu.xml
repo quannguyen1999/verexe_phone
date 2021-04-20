@@ -4,37 +4,30 @@
 
         >
         <item android:id="@+id/nav_home"
-            android:title="Trang chủ"
-            android:icon="@drawable/cloud"/>
+            android:title="Tìm vé"
+            android:icon="@drawable/search"/>
     </group>
-        <item  android:title="Profile">
-            <group android:checkableBehavior="single">
-            <menu>
-                <item android:id="@+id/nav_info"
-                    android:title="History"
-                    android:icon="@drawable/cloud"></item>
-            </menu>
-            </group>
-        </item>
+    <group android:checkableBehavior="single"
 
-
-
-
-
-
-
-    <item android:title="Communicate">
+        >
+        <item android:id="@+id/nav_support"
+            android:title="Hỗ trợ"
+            android:icon="@drawable/support"/>
+        <item android:id="@+id/nav_review"
+            android:title="Góp ý"
+            android:icon="@drawable/review"/>
+    </group>
+    <item android:title="Tài khoản">
         <menu>
-
             <item
                 android:id="@+id/nav_login"
                 android:title="Đăng nhập"
-                android:icon="@drawable/cloud"></item>
-            <item
-                android:id="@+id/nav_signup"
-                android:title="Đăng ký"
-                android:icon="@drawable/cloud"></item>
-
+                android:icon="@drawable/login"></item>
+            <item android:id="@+id/nav_info"
+                android:title="Vé của tôi"
+                android:icon="@drawable/ticket"></item>
         </menu>
     </item>
+
+
 </menu>

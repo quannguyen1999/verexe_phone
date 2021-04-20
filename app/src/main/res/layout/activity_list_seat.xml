@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListSeat"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:orientation="horizontal"
+        android:background="#fece2f"
+        >
+        <ImageButton
+            android:id="@+id/imgBack"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="240dp"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/abc_vector_test" />
+
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="57dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/schoolbus"
+            android:transitionName="imageVBA"></ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        >
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:src="@drawable/seat_not_order">
+        </ImageView>
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:text="Còn chỗ"
+            ></TextView>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:src="@drawable/seat_order">
+        </ImageView>
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:text="Đã đặt"
+            ></TextView>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:src="@drawable/seat_is_irder">
+        </ImageView>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:text="Đang đặt"
+            ></TextView>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="330dp"
+        android:scrollbars="vertical"
+        tools:ignore="MissingConstraints"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="70dp">
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="330dp"
+            android:scrollbars="vertical"
+            tools:ignore="MissingConstraints">
+            <HorizontalScrollView
+                android:id="@+id/layoutSeat"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            </HorizontalScrollView>
+
+        </ScrollView>
+
+    </ScrollView>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="40dp">
+        <Button
+            android:id="@+id/btnHuy"
+           android:layout_marginRight="20dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@color/black"
+            android:backgroundTint="@color/black"
+            android:text="Hủy"
+            app:backgroundTint="@color/black">
+
+
+        </Button>
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@color/black"
+            android:backgroundTint="@color/black"
+            android:text="Xác nhận"
+            app:backgroundTint="@color/black">
+
+
+        </Button>
+
+    </LinearLayout>
+
+</LinearLayout>

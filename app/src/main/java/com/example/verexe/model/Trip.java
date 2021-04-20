@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Trip {
     private UUID _id;
-    private LocalDate dateDepart;
+    private String dateDepart;
     private Float price;
     private String title;
     private int blank;
@@ -19,7 +19,7 @@ public class Trip {
     public Trip() {
     }
 
-    public Trip(UUID _id, LocalDate dateDepart, Float price, String title, int blank, Location departure, Location arrival, String image, Boolean online, float rating, long totalHour) {
+    public Trip(UUID _id, String dateDepart, Float price, String title, int blank, Location departure, Location arrival, String image, Boolean online, float rating, long totalHour) {
         this._id = _id;
         this.dateDepart = dateDepart;
         this.price = price;
@@ -41,11 +41,11 @@ public class Trip {
         this._id = _id;
     }
 
-    public LocalDate getDateDepart() {
+    public String getDateDepart() {
         return dateDepart;
     }
 
-    public void setDateDepart(LocalDate dateDepart) {
+    public void setDateDepart(String dateDepart) {
         this.dateDepart = dateDepart;
     }
 
@@ -117,5 +117,22 @@ public class Trip {
     }
     public void setTotalHour(long totalHour) {
         this.totalHour = totalHour;
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "_id=" + _id +
+                ", dateDepart=" + dateDepart +
+                ", price=" + price +
+                ", title='" + title + '\'' +
+                ", blank=" + blank +
+                ", departure=" + departure +
+                ", arrival=" + arrival +
+                ", image='" + image + '\'' +
+                ", online=" + online +
+                ", rating=" + rating +
+                ", totalHour=" + totalHour +
+                '}';
     }
 }

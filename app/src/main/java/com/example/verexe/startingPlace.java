@@ -1,9 +1,11 @@
 package com.example.verexe;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -54,8 +56,11 @@ public class startingPlace extends AppCompatActivity {
         txtFind = findViewById(R.id.txtFind);
         getSupportActionBar().hide();
         listProvince = new ArrayList<>();
+
         mHandler = new Handler(Looper.getMainLooper());
-        myAdapter = new MyAdapter(this, ProvinceService.getProvince(),startingPlace.this);
+        myAdapter = new MyAdapter(this,new ArrayList<>(),startingPlace.this);
+        filter("");
+
         rclView.setAdapter(myAdapter);
         rclView.setLayoutManager(new LinearLayoutManager(this));
         imgBackXP.setOnClickListener(new View.OnClickListener() {
@@ -74,10 +79,8 @@ public class startingPlace extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-                System.out.println("ok");
                 filter(s.toString());
             }
         });
@@ -121,6 +124,23 @@ public class startingPlace extends AppCompatActivity {
                 }
             }
         });
-
     }
+
+    private static final int FROM = 111;
+    private static final int TO = 222;
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        System.out.println("ok");
+//        if(requestCode == FROM){
+//            if(resultCode == RESULT_OK){
+//              filter("");
+//            }
+//        }else if(requestCode == TO){
+//            if(resultCode == RESULT_OK){
+//                filter("");
+//            }
+//        }
+//    }
 }

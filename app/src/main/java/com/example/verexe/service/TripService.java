@@ -1,7 +1,11 @@
 package com.example.verexe.service;
 
+import android.os.Handler;
+
 import com.example.verexe.HttpRequestCommon;
 import com.example.verexe.model.Trip;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +33,6 @@ public class TripService {
         OkHttpClient client = new OkHttpClient();
         String url = HttpRequestCommon.url_trip_search;
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
-
         JSONObject postdata = new JSONObject();
         try {
             postdata.put("fromLocation", "Hồ Chí Minh");
@@ -38,7 +41,6 @@ public class TripService {
         } catch(JSONException e){
             e.printStackTrace();
         }
-
         RequestBody body = RequestBody.create(MEDIA_TYPE, postdata.toString());
         Request request = new Request.Builder()
                 .url(HttpRequestCommon.url_trip_search)
@@ -47,16 +49,28 @@ public class TripService {
                 .header("Content-Type", "application/json")
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+        try {
+            Response myResponse = client.newCall(request).execute();
+            System.out.println(myResponse.isSuccessful());
+            try {
+                JSONObject json= new JSONObject(String.valueOf(myResponse));  //your response
+                JSONObject objectTripResponse = json.getJSONObject("data");
+                JSONArray result = objectTripResponse.getJSONArray("tripResponseList");
+                for(int i=0;i<result.length();i++){
+                    JSONObject jsonObject = result.getJSONObject(i);
+                    Gson gson = new Gson();
+//                            YourPojo emp = gson.fromJson(object, YourPojo.class);
+                    Trip trip = gson.fromJson(String.valueOf(jsonObject),Trip.class);
+
+                    listArray.add(trip);
+
+                }
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-            }
-        });
-        return listArray;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

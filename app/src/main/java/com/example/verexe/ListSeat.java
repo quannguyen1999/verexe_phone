@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -183,6 +184,8 @@ public class ListSeat extends AppCompatActivity implements View.OnClickListener 
 
     Button btnHuy;
 
+    ImageButton imgBack;
+
     ViewGroup layout;
 //    U chuadat
 //    R dat
@@ -211,19 +214,18 @@ public class ListSeat extends AppCompatActivity implements View.OnClickListener 
 //        myAdapter = new MyAdapter(this,new ArrayList<>(),startingPlace.this);
 
         Intent intent = getIntent();
-//        Intent intent1 = new Intent(activity, ListSeat.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("id", stringList.get(position).get_id());
-//        intent1.putExtra("add", bundle);
-//        activity.startActivity(intent1);
         Bundle bundle = intent.getBundleExtra("add");
         String valueIdTrip = bundle.getString("id");
-//        System.out.println(valueIdTrip);
         filter(valueIdTrip);
-//        int number = seatTop.get(seatTop.size()-1).getRow_num();
-//        int colNumCurrent = seatTop.get(seatTop.size()-1).getRow_num();
         btnHuy = findViewById(R.id.btnHuy);
+        imgBack = findViewById(R.id.imgBack);
         btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -436,7 +438,6 @@ public class ListSeat extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-
     @Override
     public void onClick(View view) {
         if ((int) view.getTag() == STATUS_AVAILABLE) {
@@ -455,7 +456,6 @@ public class ListSeat extends AppCompatActivity implements View.OnClickListener 
                     view.setBackgroundResource(R.drawable.seat_is_irder);
                 }
             }
-
         } else if ((int) view.getTag() == FLOOR_2) {
             if (seatBottom.get(view.getId()).getIs_available() == SeatType.CHUADAT) {
                 if (view.getBackground().getConstantState() == getResources().getDrawable(R.drawable.seat_is_irder).getConstantState()) {

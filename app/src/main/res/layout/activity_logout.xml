@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login"
+    android:orientation="vertical"
+    android:background="#fff"
+    android:paddingBottom="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:orientation="horizontal"
+        android:background="#fece2f"
+        >
+
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/bus_infontof"
+            android:transitionName="imageVBA"></ImageView>
+    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        >
+        <ImageView
+            android:layout_width="411dp"
+            android:layout_height="99dp"
+            android:src="@drawable/ic_wave"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_marginTop="-30dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+        <ImageView
+            android:id="@+id/outside_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_alignLeft="@id/inside_imageview"
+            android:layout_alignTop="@id/inside_imageview"
+            android:layout_alignRight="@id/inside_imageview"
+            android:layout_alignBottom="@id/inside_imageview"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="-57dp"
+            android:src="@drawable/cloud" />
+
+        <ImageView
+            android:id="@+id/inside_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="30dip"
+            android:layout_marginBottom="60dip"
+            android:paddingTop="50dp"
+            android:src="@drawable/logout_dialog" />
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đăng xuất thành công"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="@color/black"></TextView>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:background="@color/black"
+        android:backgroundTint="@color/black"
+        android:text="Xác nhận"
+        android:textSize="15sp"
+        app:backgroundTint="@color/black">
+
+
+    </Button>
+
+
+
+</LinearLayout>

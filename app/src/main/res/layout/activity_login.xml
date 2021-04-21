@@ -52,6 +52,7 @@
 
 
     <TextView
+        android:layout_marginTop="-85dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_width="wrap_content"
@@ -75,13 +76,13 @@
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/phone"
+
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Số điện thoại"
 
@@ -89,8 +90,31 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:id="@+id/phone"
+                >
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtilPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
 
+            android:hint="Mật khẩu"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:inputType="textPassword"
+                android:id="@+id/password"
+                >
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
         <Button
@@ -113,6 +137,7 @@
 
         </TextView>
         <TextView
+            android:layout_marginTop="-20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"
@@ -124,7 +149,7 @@
         <Button
             android:id="@+id/btnSignUpLG"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_marginTop="0dp"
             android:background="@color/black"
             android:text="Đăng ký ngay"

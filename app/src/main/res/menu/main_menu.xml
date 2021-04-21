@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single"
-
-        >
+    <group android:checkableBehavior="single">
         <item android:id="@+id/nav_home"
             android:title="Tìm vé"
             android:icon="@drawable/search"/>
     </group>
-    <group android:checkableBehavior="single"
-
-        >
+    <group android:checkableBehavior="single">
         <item android:id="@+id/nav_support"
             android:title="Hỗ trợ"
             android:icon="@drawable/support"/>
@@ -23,11 +19,13 @@
                 android:id="@+id/nav_login"
                 android:title="Đăng nhập"
                 android:icon="@drawable/login"></item>
+            <item
+                android:id="@+id/nav_logout"
+                android:title="Đăng xuất"
+                android:icon="@drawable/login"></item>
             <item android:id="@+id/nav_info"
                 android:title="Vé của tôi"
                 android:icon="@drawable/ticket"></item>
         </menu>
     </item>
-
-
 </menu>

@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Notification;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,16 +24,19 @@ import android.os.Looper;
 import android.os.StrictMode;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.verexe.adapter.AdapterListTrip;
 import com.example.verexe.adapter.MyAdapter;
+import com.example.verexe.daos.DBManager;
 import com.example.verexe.model.Trip;
 import com.example.verexe.service.TripService;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
     Button btnTimVexe;
+    Button btnLogout;
     EditText from;
     EditText to;
     Button dateformat;
@@ -86,18 +91,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private Handler mHandler;
 
+    private DBManager dbManager;
+
+    Menu menu;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dbManager = new DBManager(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         metaData();
         setSupportActionBar(toolbar);
         navigationView.bringToFront();
         mHandler = new Handler(Looper.getMainLooper());
-//        myAdapter = new MyAdapter(this,new ArrayList<>(),startingPlace.this);
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toogle);
+
         toogle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         handleEvent();
@@ -118,18 +128,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
                 LocalDate lcx = LocalDate.now();
-                System.out.println("asd:"+dateformat.getText().toString());
-                if(dateformat.getText().toString().isEmpty()){
+                if (dateformat.getText().toString().isEmpty()) {
                     showDialog("Bạn chưa chọn ngày");
                     return;
                 }
                 try {
-                    lcx = LocalDate.parse(dateformat.getText().toString(),formatter);
-                }catch (Exception e){
+                    lcx = LocalDate.parse(dateformat.getText().toString(), formatter);
+                } catch (Exception e) {
 
                 }
 
-                if(lcx.isBefore(LocalDate.now())){
+                if (lcx.isBefore(LocalDate.now())) {
                     showDialog("Ngày không hợp lệ");
                     return;
                 }
@@ -140,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
         from.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return;
             }
         });
-
         to.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return;
             }
         });
-
         final long today = MaterialDatePicker.todayInUtcMilliseconds();
         MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
         builder.setTitleText("Select a Date");
@@ -177,6 +183,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dateformat.setText(materialDatePicker.getHeaderText());
             }
         });
+
+
     }
 
     private void showDialog(String error) {
@@ -211,6 +219,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         from = findViewById(R.id.from);
         to = findViewById(R.id.to);
         dateformat = findViewById(R.id.dateformatID);
+        menu = navigationView.getMenu();
+        if (dbManager.getAuth() != null) {
+            menu.findItem(R.id.nav_login).setVisible(false);
+        } else {
+            menu.findItem(R.id.nav_logout).setVisible(false);
+            menu.findItem(R.id.nav_info).setVisible(false);
+        }
     }
 
     @Override
@@ -225,14 +240,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case R.id.nav_home:
+//                navigationView.
+                drawerLayout.closeDrawer(GravityCompat.START);
+                break;
             case R.id.nav_login:
                 Intent intent = new Intent(MainActivity.this, login.class);
                 startActivity(intent);
                 break;
-//            case R.id.nav_signup:
-//                Intent intentSignUp = new Intent(MainActivity.this, SignUp.class);
-//                startActivity(intentSignUp);
-//                break;
+            case R.id.nav_logout:
+                dbManager.deleteAll();
+                Intent intentX = new Intent(MainActivity.this, Logout.class);
+                startActivity(intentX);
+                finish();
+                break;
         }
         return true;
     }
@@ -294,10 +315,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 Intent intent = new Intent(MainActivity.this, ListTrip.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("from",from);
-                bundle.putSerializable("to",to);
-                bundle.putSerializable("date",dateDepart);
-                intent.putExtra("search",bundle);
+                bundle.putSerializable("from", from);
+                bundle.putSerializable("to", to);
+                bundle.putSerializable("date", dateDepart);
+                intent.putExtra("search", bundle);
                 startActivityForResult(intent, 555);
             }
         } catch (JSONException e) {

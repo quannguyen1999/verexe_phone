@@ -56,11 +56,9 @@ public class startingPlace extends AppCompatActivity {
         txtFind = findViewById(R.id.txtFind);
         getSupportActionBar().hide();
         listProvince = new ArrayList<>();
-
         mHandler = new Handler(Looper.getMainLooper());
         myAdapter = new MyAdapter(this,new ArrayList<>(),startingPlace.this);
         filter("");
-
         rclView.setAdapter(myAdapter);
         rclView.setLayoutManager(new LinearLayoutManager(this));
         imgBackXP.setOnClickListener(new View.OnClickListener() {

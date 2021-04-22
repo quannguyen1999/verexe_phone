@@ -111,6 +111,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toogle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         handleEvent();
+
+        fakeData();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void fakeData() {
+        from.setText("Hồ Chí Minh");
+        to.setText("Đà Nẵng");
+        dateformat.setText(LocalDate.now().toString());
     }
 
     private void handleEvent() {
@@ -241,7 +250,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
-//                navigationView.
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.nav_login:

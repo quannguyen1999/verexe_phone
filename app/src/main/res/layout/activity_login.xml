@@ -37,8 +37,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
-        >
+        android:layout_marginTop="-10dp">
         <ImageView
             android:layout_width="411dp"
             android:layout_height="99dp"
@@ -63,11 +62,22 @@
         ></TextView>
 
     <TextView
+        android:id="@+id/titleLG"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đăng Nhập để tận hưởng ưu đãi"
+        android:text="Đăng nhập để tận hưởng ưu đãi"
+        android:textSize="18sp"
+        ></TextView>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/titleDK"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng ký để tận hưởng ưu đãi"
         android:textSize="18sp"
         ></TextView>
 
@@ -128,23 +138,46 @@
             app:backgroundTint="@color/black"
             android:layout_marginBottom="10dp"
             />
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btnDangKy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/black"
+            android:text="Đăng Ký"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/black"
+            android:layout_marginBottom="10dp"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"
             android:layout_marginBottom="20dp"
             android:text="------------------------------------hoặc------------------------------------">
-
         </TextView>
+
         <TextView
+            android:id="@+id/txtNotHasAccount"
             android:layout_marginTop="-20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"
             android:layout_marginBottom="10dp"
             android:text="Bạn chưa có tài khoản"
-            android:textColor="@color/black"
-            >
+            android:textColor="@color/black">
+        </TextView>
+        <TextView
+            android:id="@+id/txtHasAccount"
+            android:visibility="gone"
+            android:layout_marginTop="-20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:layout_marginBottom="10dp"
+            android:text="Bạn đã có tài khoản"
+            android:textColor="@color/black">
         </TextView>
         <Button
             android:id="@+id/btnSignUpLG"
@@ -153,6 +186,17 @@
             android:layout_marginTop="0dp"
             android:background="@color/black"
             android:text="Đăng ký ngay"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/black"
+            android:layout_marginBottom="20dp"/>
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btnLoginLG"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="0dp"
+            android:background="@color/black"
+            android:text="Đăng nhập ngay"
             android:textColor="@color/white"
             app:backgroundTint="@color/black"
             android:layout_marginBottom="20dp"/>

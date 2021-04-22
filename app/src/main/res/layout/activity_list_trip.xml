@@ -28,15 +28,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/txtTitleLocation"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:layout_width="290dp"
                 android:layout_height="25dp"
                 android:text="Hồ Chí Minh -> Bà Rịa vũng tàu"
                 android:textSize="15sp"
-                android:layout_marginTop="15dp"
-                >
-
+                android:layout_marginTop="15dp">
             </TextView>
             <LinearLayout
                 android:layout_width="250dp"
@@ -44,6 +43,7 @@
                 android:orientation="horizontal"
                 >
                 <TextView
+                    android:id="@+id/txtTitleDateDepart"
                     android:textStyle="bold"
                     android:textAlignment="textEnd"
                     android:layout_width="180dp"
@@ -82,7 +82,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
-
         <Button
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"
@@ -95,9 +94,9 @@
             android:textColorLink="@color/white"
             android:text="Lọc"
             app:backgroundTint="@color/black">
-
         </Button>
         <Button
+            android:id="@+id/btnSort"
             android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

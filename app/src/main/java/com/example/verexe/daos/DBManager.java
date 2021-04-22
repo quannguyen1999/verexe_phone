@@ -16,10 +16,38 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String DATABASE_NAME ="manageSomething";
 
     private static final String TABLE_NAME ="auth";
-//    private static final String MA ="ma";
     private static final String TOKEN ="token";
     private static final String REFRESHTOKEN = "refreshToken";
     private static final String USERTYPE = "userType";
+
+//    private int idProject;
+//    private String nameProject;
+//    private String nameProvince;
+//    private String nameDistrict;
+//    private String timeBegin;
+//    private int hour;
+//    private int minute;
+
+//    private static final String TABLE_NAME_TICKET ="ticket";
+//
+//    private static final String idProjectFromLocation ="id_project_from_location";
+//    private static final String nameProjectFromLocation ="name_project_from_location";
+//    private static final String nameProvinceFromLocation ="name_province_from_location";
+//    private static final String nameDistrictFromLocation ="name_district_from_location";
+//    private static final String timeBeginFromLocation ="time_begin_from_location";
+//    private static final String hourFromLocation ="hour_from_location";
+//    private static final String minuteFromLocation ="minute_from_location";
+//
+//    private static final String idProjectToLocation ="id_project_to_location";
+//    private static final String nameProjectToLocation ="name_project_to_location";
+//    private static final String nameProvinceToLocation ="name_province_to_location";
+//    private static final String nameDistrictToLocation ="name_district_to_location";
+//    private static final String timeBeginToLocation ="time_begin_to_location";
+//    private static final String hourToLocation ="hour_to_location";
+//    private static final String minuteToLocation ="minute_to_location";
+//
+//    private static final String idCoach = "idCoach";
+
     private final Context context;
     public DBManager(Context context) {
         super(context, DATABASE_NAME,null, 1);
@@ -32,7 +60,14 @@ public class DBManager extends SQLiteOpenHelper {
                 TOKEN+" String primary key, "+
                 REFRESHTOKEN + " TEXT, "+
                 USERTYPE + " TEXT )";
+
+        String sqlQueryTicket = "CREATE TABLE "+TABLE_NAME +" (" +
+                TOKEN+" String primary key, "+
+                REFRESHTOKEN + " TEXT, "+
+                USERTYPE + " TEXT )";
+//        String sqlQueryTicket
         db.execSQL(sqlQuery);
+
     }
 
     public void addAuth(AuthResponse authResponse){

@@ -5,17 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.verexe.adapter.AdapterListTrip;
 import com.example.verexe.adapter.MyAdapter;
 import com.example.verexe.model.Trip;
+import com.example.verexe.model.TypeSort;
 import com.example.verexe.service.ProvinceService;
 import com.example.verexe.service.TripService;
 import com.google.gson.Gson;
@@ -39,10 +46,21 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ListTrip extends AppCompatActivity {
+    TextView txtTitleLocation,txtTitleDateDepart;
     ImageButton imgBackXP;
     AdapterListTrip adapterListTrip;
     RecyclerView rclView;
     private Handler mHandler;
+
+    private AlertDialog dialog;
+    private AlertDialog.Builder dialogBuilder;
+    private Button btnPriceLowToHight, btnPriceHightToLow, btnTimeLowToHight, btnTimeHightToLow, btnDeclineSort;
+    private Button btnSort;
+
+    private String from;
+    private String to;
+    private LocalDate dateDepart;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +69,24 @@ public class ListTrip extends AppCompatActivity {
         getSupportActionBar().hide();
         metaData();
         mHandler = new Handler(Looper.getMainLooper());
-        adapterListTrip = new AdapterListTrip(ListTrip.this, filter("a","b",LocalDate.now()),ListTrip.this);
-        handle();
-
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("search");
-        String from = bundle.getString("from");
-        String to = bundle.getString("to");
-        LocalDate dateDepart = (LocalDate) bundle.get("date");
-        filter(from,to,dateDepart);
+        from = bundle.getString("from");
+        to = bundle.getString("to");
+        dateDepart = (LocalDate) bundle.get("date");
+        txtTitleLocation.setText(from+"-"+to);
+        txtTitleDateDepart.setText(dateDepart.toString());
+        adapterListTrip = new AdapterListTrip(ListTrip.this, filter(from,to,dateDepart,TypeSort.NONE),ListTrip.this);
+        handle();
+//        filter(from,to,dateDepart,TypeSort.NONE);
     }
 
     private void metaData(){
         rclView = findViewById(R.id.rclViewListTrip);
         imgBackXP = findViewById(R.id.imgBackXP);
+        txtTitleLocation = findViewById(R.id.txtTitleLocation);
+        txtTitleDateDepart = findViewById(R.id.txtTitleDateDepart);
+        btnSort = findViewById(R.id.btnSort);
     }
 
     private void handle(){
@@ -74,11 +96,17 @@ public class ListTrip extends AppCompatActivity {
                 finish();
             }
         });
+        btnSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseSort();
+            }
+        });
     }
 
     List<Trip> listArray;
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private List<Trip> filter(String from, String to, LocalDate dateDepart) {
+    private List<Trip> filter(String from, String to, LocalDate dateDepart, TypeSort typeSort) {
         listArray = new ArrayList<>();
         OkHttpClient client = new OkHttpClient();
         String url = HttpRequestCommon.url_trip_search;
@@ -88,6 +116,7 @@ public class ListTrip extends AppCompatActivity {
             postdata.put("fromLocation", from);
             postdata.put("toLocation", to);
             postdata.put("dateDepart", dateDepart.toString());
+            postdata.put("typeSort",typeSort.toString());
         } catch(JSONException e){
             e.printStackTrace();
         }
@@ -132,5 +161,74 @@ public class ListTrip extends AppCompatActivity {
             }
         });
         return listArray;
+    }
+
+    public void chooseSort(){
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View formSort = getLayoutInflater().inflate(R.layout.form_sort,null);
+        btnPriceHightToLow = (Button) formSort.findViewById(R.id.btnPriceHightToLow);
+        btnPriceLowToHight = (Button) formSort.findViewById(R.id.btnPriceLowToHight);
+        btnTimeHightToLow = (Button) formSort.findViewById(R.id.btnTimeHightToLow);
+        btnTimeLowToHight = (Button) formSort.findViewById(R.id.btnTimeLowToHight);
+        btnDeclineSort = (Button) formSort.findViewById(R.id.btnDeclineSort);
+        dialogBuilder.setView(formSort);
+        dialog = dialogBuilder.create();
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        dialog.show();
+
+        btnDeclineSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        btnPriceHightToLow.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                filter(from,to,dateDepart,TypeSort.PRICELH);
+                dialog.dismiss();
+            }
+        });
+
+        btnPriceLowToHight.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                filter(from,to,dateDepart,TypeSort.PRICEHL);
+                dialog.dismiss();
+            }
+        });
+
+        btnTimeLowToHight.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                filter(from,to,dateDepart,TypeSort.HOURLH);
+                dialog.dismiss();
+            }
+        });
+
+        btnTimeHightToLow.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                filter(from,to,dateDepart,TypeSort.HOURHL);
+                dialog.dismiss();
+            }
+        });
+
+        btnDeclineSort.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 }

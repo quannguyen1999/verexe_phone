@@ -50,11 +50,19 @@ public class login extends AppCompatActivity {
     private static final int LOGIN = 999;
     private static final int SIGNUP = 888;
     private Button btnDangNhap;
+    private Button btnDangKy;
+
     private Button btnSignUpLG;
+    private Button btnLoginLG;
 
     private ImageButton imgBack;
     private TextInputEditText txtPhone;
     private TextInputLayout txtilPassword;
+    private TextView txtNotHasAccount;
+    private TextView txtHasAccount;
+    private TextView titleLG;
+    private TextView titleDK;
+
 
     private Handler mHandler;
 
@@ -80,7 +88,15 @@ public class login extends AppCompatActivity {
         txtPhone = findViewById(R.id.phone);
         btnSignUpLG = findViewById(R.id.btnSignUpLG);
         imgBack = findViewById(R.id.imgBack);
-//        btnLogout = findViewById(R.id.nav_logout);
+
+        btnDangKy = findViewById(R.id.btnDangKy);
+        btnLoginLG = findViewById(R.id.btnLoginLG);
+
+          txtNotHasAccount = findViewById(R.id.txtNotHasAccount);
+          txtHasAccount = findViewById(R.id.txtHasAccount);
+
+          titleLG = findViewById(R.id.titleLG);
+          titleDK = findViewById(R.id.titleDK);
     }
 
     private void handleEvent() {
@@ -176,12 +192,122 @@ public class login extends AppCompatActivity {
                 return;
             }
         });
+        btnDangKy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OkHttpClient client = new OkHttpClient();
+                String url = HttpRequestCommon.url_user_signin;
+                MediaType MEDIA_TYPE = MediaType.parse("application/json");
+                JSONObject postdata = new JSONObject();
+                try {
+                    postdata.put("phone", txtPhone.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                RequestBody body = RequestBody.create(MEDIA_TYPE, postdata.toString());
+                Request request = new Request.Builder()
+                        .url(HttpRequestCommon.url_user_signup)
+                        .post(body)
+                        .header("Accept", "application/json")
+                        .header("Content-Type", "application/json")
+                        .build();
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String myResponse = response.body().string();
+                        if (response.code() == 400) {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    JSONObject json = null;  //your response
+                                    try {
+                                        json = new JSONObject(myResponse);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    JSONArray result = null;
+                                    try {
+                                        result = json.getJSONArray("error");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Gson gson = new Gson();
+                                    for (int i = 0; i < result.length(); i++) {
+                                        JSONObject jsonObject = null;
+                                        try {
+                                            jsonObject = result.getJSONObject(i);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        CustomError error = gson.fromJson(String.valueOf(jsonObject), CustomError.class);
+//                                        if (error.getMessage().equalsIgnoreCase(account_required_password)) {
+//                                            txtilPassword.setVisibility(View.VISIBLE);
+//                                            showDialog("Please enter password");
+//                                            txtilPassword.requestFocus();
+//                                            return;
+//                                        }
+                                        showDialog(error.getMessage());
+
+                                        return;
+                                    };
+                                }
+                            });
+                        } else {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        JSONObject json = new JSONObject(myResponse);  //your response
+                                        JSONObject getJsonData = json.getJSONObject("data");
+                                        Gson gson = new Gson();
+                                        AuthResponse authResponse = gson.fromJson(String.valueOf(getJsonData), AuthResponse.class);
+                                        dbManager.addAuth(authResponse);
+                                        Intent intent = new Intent(login.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+                return;
+            }
+        });
         btnSignUpLG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(login.this, SignUp.class);
-                finish();
-                startActivityForResult(intent, SIGNUP);
+                txtilPassword.setVisibility(View.GONE);
+                btnDangNhap.setVisibility(View.GONE);
+                btnSignUpLG.setVisibility(View.GONE);
+                btnDangKy.setVisibility(View.VISIBLE);
+                btnLoginLG.setVisibility(View.VISIBLE);
+                txtHasAccount.setVisibility(View.VISIBLE);
+                txtNotHasAccount.setVisibility(View.GONE);
+                titleDK.setVisibility(View.VISIBLE);
+                titleLG.setVisibility(View.GONE);
+                return;
+            }
+        });
+
+        btnLoginLG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtilPassword.setVisibility(View.GONE);
+                btnDangNhap.setVisibility(View.VISIBLE);
+                btnSignUpLG.setVisibility(View.VISIBLE);
+                btnDangKy.setVisibility(View.GONE);
+                btnLoginLG.setVisibility(View.GONE);
+                txtHasAccount.setVisibility(View.GONE);
+                txtNotHasAccount.setVisibility(View.VISIBLE);
+                titleDK.setVisibility(View.GONE);
+                titleLG.setVisibility(View.VISIBLE);
                 return;
             }
         });
@@ -192,8 +318,6 @@ public class login extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
 
     private void showDialog(String error) {

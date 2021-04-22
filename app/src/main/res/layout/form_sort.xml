@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+<!--    btnPriceLowToHight, btnPriceHightToLow, btnTimeLowToHight, btnTimeHightToLow;-->
+    <Button
+       android:id="@+id/btnPriceHightToLow"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        android:text="Giá từ cao xuống thấp"
+        app:backgroundTint="@color/black"></Button>
+    <Button
+        android:id="@+id/btnPriceLowToHight"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        android:text="Giá từ thấp xuống cao"
+        app:backgroundTint="@color/black"></Button>
+    <Button
+        android:id="@+id/btnTimeLowToHight"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        android:text="Thời gian sớm nhất"
+        app:backgroundTint="@color/black"></Button>
+    <Button
+        android:id="@+id/btnTimeHightToLow"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        android:text="Thời gian muộn nhất"
+        app:backgroundTint="@color/black"></Button>
+    <Button
+        android:id="@+id/btnDeclineSort"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        android:text="Hủy"
+        app:backgroundTint="@color/black"></Button>
+
+</LinearLayout>

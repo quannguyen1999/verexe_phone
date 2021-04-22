@@ -1,6 +1,9 @@
 package com.example.verexe.model;
 
-public class Seat {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Seat implements Parcelable {
     private int seat_type;
     private int seat_number;
     private String seat_code;
@@ -27,6 +30,33 @@ public class Seat {
 
     public Seat() {
     }
+
+    protected Seat(Parcel in) {
+        seat_type = in.readInt();
+        seat_number = in.readInt();
+        seat_code = in.readString();
+        row_num = in.readInt();
+        col_num = in.readInt();
+        row_span = in.readInt();
+        col_span = in.readInt();
+        if (in.readByte() == 0) {
+            fare = null;
+        } else {
+            fare = in.readFloat();
+        }
+    }
+
+    public static final Creator<Seat> CREATOR = new Creator<Seat>() {
+        @Override
+        public Seat createFromParcel(Parcel in) {
+            return new Seat(in);
+        }
+
+        @Override
+        public Seat[] newArray(int size) {
+            return new Seat[size];
+        }
+    };
 
     public int getSeat_type() {
         return seat_type;
@@ -122,5 +152,27 @@ public class Seat {
                 ", fare=" + fare +
                 ", fares=" + fares +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(seat_type);
+        parcel.writeInt(seat_number);
+        parcel.writeString(seat_code);
+        parcel.writeInt(row_num);
+        parcel.writeInt(col_num);
+        parcel.writeInt(row_span);
+        parcel.writeInt(col_span);
+        if (fare == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeFloat(fare);
+        }
     }
 }

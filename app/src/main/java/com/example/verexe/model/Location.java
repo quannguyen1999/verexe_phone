@@ -1,8 +1,11 @@
 package com.example.verexe.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.time.LocalTime;
 
-public class Location {
+public class Location  implements Parcelable {
     private int idProject;
     private String nameProject;
     private String nameProvince;
@@ -23,6 +26,28 @@ public class Location {
 
     public Location() {
     }
+
+    protected Location(Parcel in) {
+        idProject = in.readInt();
+        nameProject = in.readString();
+        nameProvince = in.readString();
+        nameDistrict = in.readString();
+        timeBegin = in.readString();
+        hour = in.readInt();
+        minute = in.readInt();
+    }
+
+    public static final Creator<Location> CREATOR = new Creator<Location>() {
+        @Override
+        public Location createFromParcel(Parcel in) {
+            return new Location(in);
+        }
+
+        @Override
+        public Location[] newArray(int size) {
+            return new Location[size];
+        }
+    };
 
     public int getIdProject() {
         return idProject;
@@ -91,5 +116,21 @@ public class Location {
                 ", hour=" + hour +
                 ", minute=" + minute +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(idProject);
+        parcel.writeString(nameProject);
+        parcel.writeString(nameProvince);
+        parcel.writeString(nameDistrict);
+        parcel.writeString(timeBegin);
+        parcel.writeInt(hour);
+        parcel.writeInt(minute);
     }
 }

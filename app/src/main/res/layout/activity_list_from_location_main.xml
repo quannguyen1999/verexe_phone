@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListFromLocationMain"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:orientation="horizontal"
+        android:background="#fece2f"
+        >
+        <ImageButton
+            android:id="@+id/imgBackFromLocation"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/abc_vector_test" />
+        <ImageView
+            android:id="@+id/imgNumber"
+            android:textAlignment="viewEnd"
+            android:layout_marginTop="13dp"
+            android:layout_width="25dp"
+            android:layout_height="59dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/two">
+        </ImageView>
+        <TextView
+            android:id="@+id/txtToLocation"
+            android:layout_marginTop="30dp"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="Chọn điểm đón"
+            android:textAlignment="viewStart">
+        </TextView>
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="57dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/schoolbus"
+            android:transitionName="imageVBA"></ImageView>
+    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        >
+        <ImageView
+            android:layout_width="411dp"
+            android:layout_height="99dp"
+            android:src="@drawable/ic_wave"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rclViewFromLocation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</LinearLayout>
